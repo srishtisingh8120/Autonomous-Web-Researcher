@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from tracing import tracer
 
+@tracer.trace(span_type="tool", name="Scrape URL")
 def scrape_url(url):
     """
     Fetches the content of a URL and extracts clean text.

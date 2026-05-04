@@ -1,5 +1,7 @@
 from duckduckgo_search import DDGS
+from tracing import tracer
 
+@tracer.trace(span_type="tool", name="Search Web")
 def search_web(query, max_results=5):
     """
     Searches the web for the given query and returns a list of results with title, href, and body.

@@ -3,6 +3,7 @@ import os
 import json
 from agent import ResearchAgent
 from dotenv import load_dotenv
+from tracing import tracer
 
 load_dotenv()
 
@@ -63,6 +64,9 @@ if st.button("Start Research"):
             status_container.update(label="Searching and Scraping the Web...", state="running")
             
             report = agent.run(query)
+            
+            # Export trace after the agent span finishes to ensure the root is captured
+            tracer.export_trace(output=report, query=query)
             
             status_container.update(label="Research Complete!", state="complete", expanded=False)
             

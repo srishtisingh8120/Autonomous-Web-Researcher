@@ -4,6 +4,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from tools.search import search_web
 from tools.scraper import scrape_url
+from tracing import tracer
 
 load_dotenv()
 
@@ -20,6 +21,7 @@ class ResearchAgent:
         self.scrapes_count = 0
         self.max_scrapes = 3
 
+    @tracer.trace(span_type="agent", name="Autonomous Web Researcher")
     def run(self, query):
         system_prompt = """You are an Autonomous Web Researcher. 
 Your goal is to provide a comprehensive answer to the user's query by searching and reading web content.
@@ -74,7 +76,6 @@ CRITICAL:
                 print(f"Thought: {thought}")
                 
                 if action == "finalize_report":
-                    print("Action: Finalizing Report")
                     return action_input
 
                 elif action == "search_web":
@@ -104,7 +105,8 @@ CRITICAL:
                 print(f"Error in agent loop: {e}")
                 break
 
-        return "Failed to complete research within budget."
+        result = "Failed to complete research within budget."
+        return result
 
 if __name__ == "__main__":
     agent = ResearchAgent()
