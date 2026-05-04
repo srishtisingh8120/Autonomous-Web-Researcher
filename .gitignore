@@ -1,0 +1,21 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+research_report.md
